@@ -15,7 +15,7 @@ namespace CartService.Handlers
             var cartEntity = await _dbContext.Carts
                 .AsNoTracking()
                 .Include(c => c.Items)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(cancellationToken);
 
             if (cartEntity is null || cartEntity.Items.Count == 0)
                 return new BaseResponse<CartResponse>(null);
