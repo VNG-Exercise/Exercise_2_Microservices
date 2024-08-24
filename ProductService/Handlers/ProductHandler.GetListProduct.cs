@@ -12,7 +12,7 @@ namespace ProductService.Handlers
             GetListProductQuery request,
             CancellationToken cancellationToken)
         {
-            var query = _dbContext.Products.AsNoTracking();
+            var query = _dbContext.Products.AsNoTracking().Where(q => q.IsDeleted == false);
 
             var count = await query.CountAsync(cancellationToken);
 

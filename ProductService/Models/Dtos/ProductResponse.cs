@@ -6,6 +6,12 @@ namespace ProductService.Models.Dtos
     {
         public ProductResponse(Product entity)
         {
+            Id = entity.Id;
+            Name = entity.Name;
+            Quantity = entity.Quantity;
+            CreationDate = entity.CreationDate;
+            ModificationDate = entity.ModificationDate;
+            IsDeleted = entity.IsDeleted;
         }
     }
 }

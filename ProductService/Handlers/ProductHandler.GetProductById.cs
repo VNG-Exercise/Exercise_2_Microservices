@@ -14,7 +14,8 @@ namespace ProductService.Handlers
         {
             var entity = await _dbContext.Products
                 .AsNoTracking()
-                .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken);
+                .FirstOrDefaultAsync(p => p.Id == request.Id &&
+                                     p.IsDeleted == false, cancellationToken);
 
             if (entity is null)
                 return new BaseResponse<ProductResponse>(null);

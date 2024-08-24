@@ -17,7 +17,7 @@ namespace CartService.Handlers
             if (product is null || product.Quantity < request.Quantity)
                 return new BaseResponse<long>(0, StatusCodeResponse.Success, "Product not available or insufficient quantity.");
 
-            var cart = await _dbContext.Carts.FindAsync(request.CartId);
+            var cart = await _dbContext.Carts.FindAsync(request.CartId, cancellationToken);
             if (cart is null)
             {
                 cart = new Cart { Id = request.CartId };
