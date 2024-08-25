@@ -3,10 +3,13 @@
     public static class GeneralServiceExtension
     {
         public static void AddGeneralConfigurations(
-            this IServiceCollection services)
+            this IServiceCollection services,
+            IConfiguration configuration)
         {
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+
+            services.Configure<AppSettings>(configuration);
         }
     }
 }

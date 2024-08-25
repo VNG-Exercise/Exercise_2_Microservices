@@ -4,8 +4,8 @@ using CartService.Extensions.ServiceExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddGeneralConfigurations();
-builder.Services.AddInjectedServices();
+builder.Services.AddGeneralConfigurations(builder.Configuration);
+builder.Services.AddInjectedServices(builder.Configuration);
 builder.Services.AddDbContextConfigurations(builder.Configuration);
 
 var app = builder.Build();

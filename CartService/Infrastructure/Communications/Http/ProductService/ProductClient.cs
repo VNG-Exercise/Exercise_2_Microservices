@@ -1,4 +1,5 @@
-﻿using CartService.Models.Dtos;
+﻿using CartService.Helpers;
+using CartService.Models.Dtos;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
@@ -9,6 +10,7 @@ namespace CartService.Infrastructure.Communications.Http.ProductService
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<ProductClient> _logger;
+        private readonly string _baseUri;
 
         public ProductClient(
             HttpClient httpClient,
@@ -16,22 +18,27 @@ namespace CartService.Infrastructure.Communications.Http.ProductService
         {
             _httpClient = httpClient;
             _logger = logger;
+            _baseUri = AppUtils.GetConfig("ProductService:BaseUri");
         }
 
         public async Task<ProductModel?> GetProductAsync(long Id)
         {
-            var (_, result) = await SendRequestAsync<ProductModel>("GET", $"/api/v1/product/{Id}", null, "https://localhost:7070");
+            var (_, response) = await SendRequestAsync<BaseResponse<ProductModel>>("GET", $"/api/v1/product/{Id}", null);
 
-            return result;
+            if (response is null)
+                return null;
+
+            _logger.LogInformation($"ProductClient -> GetProductAsync: Call api from ProductService status is {response.Code} and message is {response.Message}");
+
+            return response.Data;
         }
 
         private async Task<(bool, T?)> SendRequestAsync<T>(
             string method,
             string endpoint,
-            object? data,
-            string baseUrl)
+            object? data)
         {
-            var baseUri = new Uri(baseUrl);
+            var baseUri = new Uri(_baseUri);
 
             var requestUri = new Uri(baseUri, endpoint);
 
