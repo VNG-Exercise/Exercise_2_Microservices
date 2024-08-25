@@ -1,14 +1,13 @@
 ﻿using CartService.DbContexts;
 using CartService.Helpers;
 using CartService.Infrastructure.Communications.Http.ProductService;
-using CartService.Infrastructure.Communications.Refit.ProductService;
 using CartService.Models.Dtos;
 
 namespace CartService.Handlers
 {
     public partial class CartHandler(
         CartDbContext dbContext,
-        IProductService productRepository,
+        Infrastructure.Communications.Refit.ProductService.IProductService productRepository,
         IServiceProvider serviceProvider,
         ILogger<CartHandler> logger) :
         BaseHandler<CartHandler>(dbContext, productRepository, serviceProvider, logger)
@@ -29,8 +28,11 @@ namespace CartService.Handlers
                 case ProtocolType.REFIT:
                     return await _productService.GetProductAsync(Id);
                 case ProtocolType.GRPC:
-                    //todo
-                    return null;
+                    {
+                        var productService = _serviceProvider.GetRequiredService<Infrastructure.Communications.gRPC.Procedures.IProductService>();
+
+                        return await productService.GetProductAsync(Id);
+                    }
             }
 
             return null;

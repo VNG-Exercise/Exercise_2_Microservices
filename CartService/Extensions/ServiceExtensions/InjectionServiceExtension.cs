@@ -1,5 +1,5 @@
-﻿using CartService.Infrastructure.Communications.Http.ProductService;
-using CartService.Infrastructure.Communications.Refit.ProductService;
+﻿using CartService.Infrastructure.Communications.gRPC.Procedures;
+using CartService.Infrastructure.Communications.Http.ProductService;
 using Refit;
 
 namespace CartService.Extensions.ServiceExtensions
@@ -21,13 +21,15 @@ namespace CartService.Extensions.ServiceExtensions
 
             productServiceUri = string.IsNullOrEmpty(productServiceUri) ? "https://localhost:7070" : productServiceUri;
 
-            services.AddRefitClient<IProductService>()
+            services.AddRefitClient<Infrastructure.Communications.Refit.ProductService.IProductService>()
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(productServiceUri));
 
             services.AddScoped<ProductClient>();
             services.AddHttpClient<ProductClient>(
                 nameof(ProductClient),
                 httpClient => { httpClient.Timeout = TimeSpan.FromSeconds(30); });
+
+            services.AddTransient<Infrastructure.Communications.gRPC.Procedures.IProductService, ProductService>();
 
             return services;
         }

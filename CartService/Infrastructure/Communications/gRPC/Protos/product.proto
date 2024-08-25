@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "CartService.Infrastructure.Communications.gRPC.Protos.ProductClient";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+service ProductProtoService {
+	rpc GetProduct (GetProductRequest) returns (ProductModel);
+}
+
+message GetProductRequest {
+	string productId = 1;
+}
+
+message ProductModel {
+	google.protobuf.StringValue Id = 1;
+	google.protobuf.StringValue Name = 2;
+	google.protobuf.StringValue Quantity = 3;
+	google.protobuf.StringValue Price = 4;
+}

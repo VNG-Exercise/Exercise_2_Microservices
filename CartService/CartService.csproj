@@ -7,6 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\Communications\Protos\**" />
+    <Content Remove="Infrastructure\Communications\Protos\**" />
+    <EmbeddedResource Remove="Infrastructure\Communications\Protos\**" />
+    <None Remove="Infrastructure\Communications\Protos\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.27.3" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.65.0" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.65.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.65.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="MediatR" Version="12.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
@@ -23,7 +37,8 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Communications\gRPC\Protos\" />
-    <Folder Include="Infrastructure\Communications\gRPC\Procedures\" />
   </ItemGroup>
-
+	<ItemGroup>
+		<Protobuf Include="Infrastructure\Communications\gRPC\Protos\product.proto" GrpcServices="Client" />
+	</ItemGroup>
 </Project>
