@@ -25,7 +25,7 @@ namespace CartService.Handlers
                 return new BaseResponse<bool>(false, StatusCodeResponse.Success, $"Not found any cartItem with ProductId={request.ProductId}");
 
             cart.Items.Remove(cartItem);
-            cart.TotalPrice -= cartItem.Quantity * _productRepository.GetProduct(request.ProductId).Result.Price;
+            cart.TotalPrice -= cartItem.Quantity * _productService.GetProductAsync(request.ProductId).Result.Price;
 
             await _dbContext.SaveChangesAsync();
 

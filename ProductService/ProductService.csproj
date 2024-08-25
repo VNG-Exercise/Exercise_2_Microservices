@@ -19,4 +19,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Infrastructure\Communications\gRPC\ProductService\" />
+    <Folder Include="Infrastructure\Communications\Http\" />
+    <Folder Include="Infrastructure\Communications\Refit\" />
+  </ItemGroup>
+
 </Project>

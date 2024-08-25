@@ -13,7 +13,9 @@ namespace CartService.Handlers
             AddProductToCartCommand request,
             CancellationToken cancellationToken)
         {
-            var product = await _productRepository.GetProduct(request.ProductId);
+            // choose protocol type here. By default is HttpClient
+            var product = await GetProductFromProductService(request.ProductId, ProtocolType.HTTP);
+
             if (product is null || product.Quantity < request.Quantity)
                 return new BaseResponse<long>(0, StatusCodeResponse.Success, "Product not available or insufficient quantity.");
 

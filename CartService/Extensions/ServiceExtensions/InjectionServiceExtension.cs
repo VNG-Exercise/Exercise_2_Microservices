@@ -1,4 +1,5 @@
-﻿using CartService.Repositories;
+﻿using CartService.Infrastructure.Communications.Http.ProductService;
+using CartService.Infrastructure.Communications.Refit.ProductService;
 using Refit;
 
 namespace CartService.Extensions.ServiceExtensions
@@ -13,8 +14,13 @@ namespace CartService.Extensions.ServiceExtensions
 
         private static IServiceCollection AddThirdPartyService(this IServiceCollection services)
         {
-            services.AddRefitClient<IProductRepository>()
+            services.AddRefitClient<IProductService>()
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:7070"));
+
+            services.AddScoped<ProductClient>();
+            services.AddHttpClient<ProductClient>(
+                nameof(ProductClient),
+                httpClient => { httpClient.Timeout = TimeSpan.FromSeconds(30); });
 
             return services;
         }

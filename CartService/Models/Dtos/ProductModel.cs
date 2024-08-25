@@ -1,4 +1,4 @@
-﻿namespace CartService.Repositories
+﻿namespace CartService.Models.Dtos
 {
     public class ProductModel
     {
