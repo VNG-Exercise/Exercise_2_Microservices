@@ -20,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\Communications\gRPC\ProductService\" />
+    <Folder Include="Infrastructure\Communications\gRPC\Procedures\" />
+    <Folder Include="Infrastructure\Communications\gRPC\Protos\" />
     <Folder Include="Infrastructure\Communications\Http\" />
     <Folder Include="Infrastructure\Communications\Refit\" />
   </ItemGroup>

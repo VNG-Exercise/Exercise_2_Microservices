@@ -6,20 +6,13 @@ using System.Text;
 
 namespace CartService.Infrastructure.Communications.Http.ProductService
 {
-    public class ProductClient
+    public class ProductClient(
+        HttpClient httpClient,
+        ILogger<ProductClient> logger)
     {
-        private readonly HttpClient _httpClient;
-        private readonly ILogger<ProductClient> _logger;
-        private readonly string _baseUri;
-
-        public ProductClient(
-            HttpClient httpClient,
-            ILogger<ProductClient> logger)
-        {
-            _httpClient = httpClient;
-            _logger = logger;
-            _baseUri = AppUtils.GetConfig("ProductService:BaseUri");
-        }
+        private readonly HttpClient _httpClient = httpClient;
+        private readonly ILogger<ProductClient> _logger = logger;
+        private readonly string _baseUri = AppUtils.GetConfig("ProductService:BaseUri");
 
         public async Task<ProductModel?> GetProductAsync(long Id)
         {
