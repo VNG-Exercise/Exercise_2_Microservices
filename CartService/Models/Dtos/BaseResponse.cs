@@ -4,6 +4,7 @@ namespace CartService.Models.Dtos
 {
     public class BaseResponse<T>
     {
+        public BaseResponse() { }
         public BaseResponse(T? data, string code, string message)
         {
             Data = data;

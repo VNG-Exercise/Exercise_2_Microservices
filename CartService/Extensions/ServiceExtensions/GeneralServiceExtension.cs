@@ -1,4 +1,6 @@
-﻿namespace CartService.Extensions.ServiceExtensions
+﻿using MediatR;
+
+namespace CartService.Extensions.ServiceExtensions
 {
     public static class GeneralServiceExtension
     {
@@ -10,6 +12,10 @@
             services.AddSwaggerGen();
 
             services.Configure<AppSettings>(configuration);
+            services.AddMediatR((cf) =>
+            {
+                cf.RegisterServicesFromAssembly(typeof(GeneralServiceExtension).Assembly);
+            });
         }
     }
 }

@@ -14,7 +14,7 @@ namespace CartService.Endpoints
         public static void MapAppEndpoints(this IEndpointRouteBuilder endpoints)
         {
             endpoints.MapGet($"{prefix}" + "/{cartId}",
-              async ([FromQuery] long cartId, IMediator mediator)
+              async (long cartId, [FromServices] IMediator mediator)
               =>
               {
                   return await mediator.Send(new GetCartByIdQuery { CartId = cartId });
@@ -23,7 +23,9 @@ namespace CartService.Endpoints
               .Produces<BaseResponse<CartResponse>>();
 
             endpoints.MapPost($"{prefix}" + "/{cartId}/add",
-              async ([FromQuery] long cartId, AddProductToCartCommand request, IMediator mediator)
+              async (long cartId,
+                     [FromBody] AddProductToCartCommand request,
+                     [FromServices] IMediator mediator)
               =>
               {
                   request.CartId = cartId;
@@ -33,7 +35,10 @@ namespace CartService.Endpoints
               .Produces<BaseResponse<long>>();
 
             endpoints.MapDelete($"{prefix}" + "/{cartId}/remove/{productId}",
-              async ([FromQuery] long cartId, [FromQuery] long productId, RemoveProductFromCartCommand request, IMediator mediator)
+              async (long cartId,
+                     [FromQuery] long productId,
+                     [FromBody] RemoveProductFromCartCommand request,
+                     [FromServices] IMediator mediator)
               =>
               {
                   request.CartId = cartId;

@@ -14,7 +14,7 @@ namespace ProductService.Endpoints
         public static void MapAppEndpoints(this IEndpointRouteBuilder endpoints)
         {
             endpoints.MapGet($"{prefix}",
-               async (IMediator mediator)
+               async ([FromServices] IMediator mediator)
                =>
                {
                    return await mediator.Send(new GetListProductQuery());
@@ -22,8 +22,8 @@ namespace ProductService.Endpoints
                .WithTags(group)
                .Produces<BaseResponse<PagingResponse<ProductResponse>>>();
 
-            endpoints.MapGet($"{prefix}" + "/{id}",
-               async ([FromQuery] long id, IMediator mediator)
+            endpoints.MapGet($"{prefix}/" + "{id}",
+               async (long id, [FromServices] IMediator mediator)
                =>
                {
                    return await mediator.Send(new GetProductByIdQuery() { Id = id });
@@ -32,7 +32,7 @@ namespace ProductService.Endpoints
                .Produces<BaseResponse<ProductResponse>>();
 
             endpoints.MapPost($"{prefix}",
-               async (CreateProductCommand request, IMediator mediator)
+               async (CreateProductCommand request, [FromServices] IMediator mediator)
                =>
                {
                    return await mediator.Send(request);
@@ -40,8 +40,8 @@ namespace ProductService.Endpoints
                .WithTags(group)
                .Produces<BaseResponse<long>>();
 
-            endpoints.MapPut($"{prefix}" + "/{id}",
-               async ([FromQuery] long id, UpdateProductCommand request, IMediator mediator)
+            endpoints.MapPut($"{prefix}/" + "{id}",
+               async (long id, [FromBody] UpdateProductCommand request, [FromServices] IMediator mediator)
                =>
                {
                    request.Id = id;
@@ -50,8 +50,8 @@ namespace ProductService.Endpoints
                .WithTags(group)
                .Produces<BaseResponse<bool>>();
 
-            endpoints.MapDelete($"{prefix}" + "/{id}",
-               async ([FromQuery] long id, DeleteProductCommand request, IMediator mediator)
+            endpoints.MapDelete($"{prefix}/" + "{id}",
+               async (long id, [FromBody] DeleteProductCommand request, [FromServices] IMediator mediator)
                =>
                {
                    request.Id = id;

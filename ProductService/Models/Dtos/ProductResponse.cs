@@ -7,6 +7,7 @@ namespace ProductService.Models.Dtos
         public ProductResponse(Product entity)
         {
             Id = entity.Id;
+            Price = entity.Price;
             Name = entity.Name;
             Quantity = entity.Quantity;
             CreationDate = entity.CreationDate;

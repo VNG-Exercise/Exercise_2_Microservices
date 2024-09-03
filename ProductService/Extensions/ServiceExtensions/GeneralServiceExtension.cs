@@ -7,6 +7,10 @@
         {
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+            services.AddMediatR((cf) =>
+            {
+                cf.RegisterServicesFromAssembly(typeof(GeneralServiceExtension).Assembly);
+            });
         }
     }
 }

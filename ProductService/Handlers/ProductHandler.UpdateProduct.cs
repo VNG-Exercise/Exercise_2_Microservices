@@ -17,6 +17,10 @@ namespace ProductService.Handlers
             if (productEntity is null)
                 return new BaseResponse<bool>(false, StatusCodeResponse.Success, $"Not found any product with requestId={request.Id}");
 
+            productEntity.Quantity = request.Quantity;
+            productEntity.Price = request.Price;
+            productEntity.Name = request.Name;
+
             _dbContext.Products.Update(productEntity);
 
             await _dbContext.SaveChangesAsync(cancellationToken);
